@@ -10,10 +10,23 @@ public class TicTacToe2 {
 	
 	public static void main(String[] args) {
 		resetGame();
+		System.out.println("Welcome to tic-tac-toe where you never win");
+		System.out.println("Would you like to go first or second?");
+		System.out.println("Enter 1 or 2");
+		int firstOrSecond = scan.nextInt();
 		printGuide();
 		printBoard();
 		while(!isFinished()) {
-			playGame();
+			if(firstOrSecond == 1) {
+				playGame();
+				int[] x = computer();
+				board[x[0]][x[1]] = 2;
+			}
+			else if(firstOrSecond == 2) {
+				int[] x = computer();
+				board[x[0]][x[1]] = 2;
+				playGame();
+			}
 			printBoard();
 		}
 		System.out.println("Game Over!");
@@ -28,8 +41,7 @@ public class TicTacToe2 {
 	}
 	
 	public static void printGuide() {
-		System.out.println("Welcome to tic-tac-tow where you never win\n" + 
-				"You are O and the computer is X\n" +
+		System.out.println("You are O and the computer is X\n" +
 				"Here's how to play:\n" + 
 				"Enter 0 to mark the top-left\n" +
 				"Enter 1 to mark the top-middle\n" +
@@ -88,8 +100,7 @@ public class TicTacToe2 {
 			}
 		}
 		numOfTurns++;
-			int[] x = computer();
-			board[x[0]][x[1]] = 2;
+
 		}
 		
 	
@@ -189,6 +200,34 @@ public class TicTacToe2 {
 		if(numOfTurns >= 2) {
 			for(int i = 0; i < board.length-1; i++) {
 				for(int r = 0; r < board.length; r++) {
+					if(board[r][i] == 2 && board[r][i+1] == 2) {
+						if(i == 1 && board[r][0] == 0) {
+							x[0] = r;
+							x[1] = 0;
+							return x;
+						}
+						else if(i+2 <= 2) {
+							if(board[r][i+2] == 0){
+							x[0] = r;
+							x[1] = i+2;
+							return x;
+							}
+					}
+					}
+					if(board[i][r] == 2 && board[i+1][r] == 2) {
+						if(i == 1 && board[0][r] == 0) {
+							x[0] = 0;
+							x[1] = r;
+							return x;
+						}
+						else if(i+2 <= 2) {
+							if(board[i+2][r] == 0){
+							x[0] = i+2;
+							x[1] = r;
+							return x;
+							}
+					}
+					}
 					if(board[r][i] == 1 && board[r][i+1] == 1) {
 						if(i == 1 && board[r][0] == 0) {
 							x[0] = r;
@@ -230,7 +269,18 @@ public class TicTacToe2 {
 					x[1] = i;
 					return x;
 				}
+				if(board[i][0] == 2 && board[i][2] == 2 && board[i][1] == 0) {
+					x[0] = i;
+					x[1] = 1;
+					return x;
+				}
+				if(board[0][i] == 2 && board[2][i] == 2 && board[1][i] == 0) {
+					x[0] = 1;
+					x[1] = i;
+					return x;
+				}
 			}
+			
 			if(board[0][0] == 1 && board[2][2] == 1 && board[1][1] == 0) {
 				x[0] = 1;
 				x[1] = 1;
@@ -261,7 +311,80 @@ public class TicTacToe2 {
 				x[1] = 0;
 				return x;
 			}
+			
+			
+			
+			if(board[0][0] == 2 && board[2][2] == 2 && board[1][1] == 0) {
+				x[0] = 1;
+				x[1] = 1;
+				return x;
 			}
+			else if(board[2][0] == 2 && board[0][2] == 2 && board[1][1] == 0) {
+				x[0] = 1;
+				x[1] = 1;
+				return x;
+			}
+			else if(board[0][0] == 2 && board[1][1] == 2 && board[2][2] == 0) {
+				x[0] = 2;
+				x[1] = 2;
+				return x;
+			}
+			else if(board[2][0] == 2 && board[1][1] == 2 && board[0][2] == 0) {
+				x[0] = 0;
+				x[1] = 2;
+				return x;
+			}
+			else if(board[0][2] == 2 && board[1][1] == 2 && board[2][0] == 0) {
+				x[0] = 2;
+				x[1] = 0;
+				return x;
+			}
+			else if(board[2][2] == 2 && board[1][1] == 2 && board[0][0] == 0) {
+				x[0] = 0;
+				x[1] = 0;
+				return x;
+			}
+			}
+		if(board[0][1] == 1 && board[1][0] == 1) {
+			x[0] = 0;
+			x[1] = 0;
+			return x;
+		}
+		if(board[1][0] == 1 && board[2][1] == 1) {
+			x[0] = 2;
+			x[1] = 0;
+			return x;
+		}
+		if(board[2][1] == 1 && board[1][2] == 1) {
+			x[0] = 2;
+			x[1] = 2;
+			return x;
+		}
+		if(board[1][2] == 1 && board[0][1] == 1) {
+			x[0] = 0;
+			x[1] = 2;
+			return x;
+		}
+		if(board[0][0] == 0) {
+			x[0] = 0;
+			x[1] = 0;
+			return x;
+		}
+		if(board[0][2] == 0) {
+			x[0] = 0;
+			x[1] = 2;
+			return x;
+		}
+		if(board[2][0] == 0) {
+			x[0] = 2;
+			x[1] = 0;
+			return x;
+		}
+		if(board[2][2] == 0) {
+			x[0] = 2;
+			x[1] = 2;
+			return x;
+		}
 		for(int i = 0; i < board.length; i++ ) {
 			for(int r = 0; r < board.length; r++) {
 				if(board[i][r] == 0) {
